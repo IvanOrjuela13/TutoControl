@@ -1,7 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
-const registroRoutes = require('./routes/registro'); // Importar la nueva ruta
+const registroRoutes = require('./routes/registro');
 const path = require('path');
 const cors = require('cors');
 require('dotenv').config();
@@ -28,6 +28,11 @@ app.get('/', (req, res) => {
 // Ruta para el archivo register.html
 app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+
+// Ruta para el archivo login.html
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 // Rutas
