@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Ruta para registrar entrada
 router.post('/entrada', async (req, res) => {
-    const { userId, ubicacion } = req.body; // Recibir ID de usuario y ubicación
+    const { userId, deviceID, ubicacion } = req.body;
 
     // Generar timestamp con la fecha y hora actual
     const timestamp = new Date(); 
@@ -16,17 +16,17 @@ router.post('/entrada', async (req, res) => {
             ubicacion, 
             fecha: timestamp // Se almacena la fecha actual
         });
-        await nuevoRegistro.save(); // Guardar el registro en la base de datos
-        res.status(201).json({ msg: 'Entrada registrada exitosamente' }); // Respuesta exitosa
+        await nuevoRegistro.save();
+        res.status(201).json({ msg: 'Entrada registrada exitosamente' });
     } catch (error) {
-        console.error('Error al registrar entrada:', error); // Mensaje de error en la consola del servidor
-        res.status(500).json({ msg: 'Error al registrar la entrada' }); // Respuesta de error
+        console.error(error);
+        res.status(500).json({ msg: 'Error al registrar la entrada' });
     }
 });
 
 // Ruta para registrar salida
 router.post('/salida', async (req, res) => {
-    const { userId, ubicacion } = req.body; // Recibir ID de usuario y ubicación
+    const { userId, deviceID, ubicacion } = req.body;
 
     // Generar timestamp con la fecha y hora actual
     const timestamp = new Date(); 
@@ -38,12 +38,13 @@ router.post('/salida', async (req, res) => {
             ubicacion, 
             fecha: timestamp // Se almacena la fecha actual
         });
-        await nuevoRegistro.save(); // Guardar el registro en la base de datos
-        res.status(201).json({ msg: 'Salida registrada exitosamente' }); // Respuesta exitosa
+        await nuevoRegistro.save();
+        res.status(201).json({ msg: 'Salida registrada exitosamente' });
     } catch (error) {
-        console.error('Error al registrar salida:', error); // Mensaje de error en la consola del servidor
-        res.status(500).json({ msg: 'Error al registrar la salida' }); // Respuesta de error
+        console.error(error);
+        res.status(500).json({ msg: 'Error al registrar la salida' });
     }
 });
 
-module.exports = router; // Exportar el router
+module.exports = router;
+
