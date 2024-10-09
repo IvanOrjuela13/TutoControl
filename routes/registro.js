@@ -11,6 +11,7 @@ router.post('/entrada', async (req, res) => {
             userId, 
             deviceID, 
             ubicacion, // Asegúrate de que este objeto tenga lat y lng
+            fecha: new Date(), // Establecer la fecha y hora actual
             tipo: 'entrada' 
         });
         await nuevoRegistro.save();
@@ -30,6 +31,7 @@ router.post('/salida', async (req, res) => {
             userId, 
             deviceID, 
             ubicacion, // Asegúrate de que este objeto tenga lat y lng
+            fecha: new Date(), // Establecer la fecha y hora actual
             tipo: 'salida' 
         });
         await nuevoRegistro.save();
