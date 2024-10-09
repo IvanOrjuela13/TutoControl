@@ -7,7 +7,7 @@ const registroSchema = new mongoose.Schema({
         lat: { type: Number, required: true },
         lng: { type: Number, required: true }
     },
-    fecha: { type: Date, default: Date.now }, // Campo para la fecha
+    fecha: { type: Date, default: () => new Date().toISOString() }, // Cambiado aquí para usar UTC
     tipo: { type: String, required: true } // 'entrada' o 'salida'
 });
 
