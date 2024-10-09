@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Registro de Tutores</title> <!-- Cambié el título aquí -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         #locationDisplay {
@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">Dashboard</h2>
+        <h2 class="text-center">Registro de Tutores</h2> <!-- Cambié el título aquí -->
         <div class="text-center">
             <button id="entradaBtn" class="btn btn-success">Registro de Entrada</button>
             <button id="salidaBtn" class="btn btn-danger">Registro de Salida</button>
@@ -117,6 +117,17 @@
             } catch (error) {
                 showError(error); // Manejar el error
             }
+        });
+
+        // Agregar evento para el botón de cerrar sesión
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            // Aquí puedes agregar la lógica para cerrar la sesión
+            localStorage.removeItem('deviceID'); // Eliminar el Device ID del almacenamiento local
+            document.getElementById('message').innerHTML = `<div class="alert alert-success">Sesión cerrada exitosamente.</div>`;
+            // Redirigir a la página de inicio de sesión o a donde necesites
+            setTimeout(() => {
+                window.location.href = 'login.html'; // Cambia esto a la URL de tu página de inicio de sesión
+            }, 2000); // Redirigir después de 2 segundos
         });
 
         // Llamar a la función para obtener la ubicación al cargar la página
