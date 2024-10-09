@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Bienvenido al Dashboard</h2>
+        <div id="welcomeMessage" class="text-center mb-4"></div>
+        <button id="logoutButton" class="btn btn-danger">Cerrar sesión</button>
+        
+        <div class="mt-3">
+            <h4>Acciones:</h4>
+            <button id="registerEntry" class="btn btn-primary">Registro de entrada</button>
+            <button id="registerExit" class="btn btn-secondary">Registro de salida</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                // Redirige a la página de inicio de sesión si no hay token
+                window.location.href = 'login.html';
+            } else {
+                // Aquí puedes decodificar el token para obtener información del usuario, si es necesario
+                const welcomeMessage = document.getElementById('welcomeMessage');
+                welcomeMessage.innerHTML = '¡Hola, usuario!';
+
+                // Aquí puedes agregar más lógica para mostrar información del usuario
+            }
+        });
+
+        // Lógica para cerrar sesión
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            localStorage.removeItem('token'); // Elimina el token
+            window.location.href = 'login.html'; // Redirige a la página de inicio de sesión
+        });
+
+        // Lógica para registrar entrada
+        document.getElementById('registerEntry').addEventListener('click', () => {
+            // Aquí puedes agregar la lógica para registrar la entrada
+            alert('Registro de entrada realizado.');
+        });
+
+        // Lógica para registrar salida
+        document.getElementById('registerExit').addEventListener('click', () => {
+            // Aquí puedes agregar la lógica para registrar la salida
+            alert('Registro de salida realizado.');
+        });
+    </script>
+</body>
+</html>
+
