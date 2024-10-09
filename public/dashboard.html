@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Tutores</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         #locationDisplay {
@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">Registro de Tutores</h2>
+        <h2 class="text-center">Dashboard</h2>
         <div class="text-center">
             <button id="entradaBtn" class="btn btn-success">Registro de Entrada</button>
             <button id="salidaBtn" class="btn btn-danger">Registro de Salida</button>
@@ -78,7 +78,7 @@
                 const position = await getLocation(); // Esperar a que se obtenga la ubicación
                 const locationData = showPosition(position); // Mostrar la ubicación
 
-                const userId = localStorage.getItem('userId'); // Obtén el ID del usuario logueado
+                const userId = 'ID_DEL_USUARIO'; // Cambia esto por el ID del usuario logueado
                 const deviceID = localStorage.getItem('deviceID');
 
                 const response = await fetch('/api/registro/entrada', {
@@ -101,7 +101,7 @@
                 const position = await getLocation(); // Esperar a que se obtenga la ubicación
                 const locationData = showPosition(position); // Mostrar la ubicación
 
-                const userId = localStorage.getItem('userId'); // Obtén el ID del usuario logueado
+                const userId = 'ID_DEL_USUARIO'; // Cambia esto por el ID del usuario logueado
                 const deviceID = localStorage.getItem('deviceID');
 
                 const response = await fetch('/api/registro/salida', {
@@ -117,14 +117,6 @@
             } catch (error) {
                 showError(error); // Manejar el error
             }
-        });
-
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            localStorage.removeItem('token'); // Elimina el token
-            localStorage.removeItem('deviceID'); // Elimina el Device ID
-            localStorage.removeItem('userId'); // Elimina el ID del usuario
-            alert("Sesión cerrada exitosamente."); // Mensaje de sesión cerrada
-            window.location.href = 'login.html'; // Redirige a la página de inicio de sesión
         });
 
         // Llamar a la función para obtener la ubicación al cargar la página
