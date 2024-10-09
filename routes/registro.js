@@ -2,17 +2,25 @@ const express = require('express');
 const Registro = require('../models/registro'); // Asegúrate de que este modelo existe
 const router = express.Router();
 
+// Función para obtener la fecha y hora local ajustada
+function obtenerFechaLocal() {
+    const now = new Date();
+    const offsetMs = now.getTimezoneOffset() * 60 * 1000; // Obtener el desfase en milisegundos
+    const localDate = new Date(now.getTime() - offsetMs); // Ajustar a la hora local
+    return localDate;
+}
+
 // Ruta para registrar entrada
 router.post('/entrada', async (req, res) => {
     const { userId, deviceID, ubicacion } = req.body;
 
     try {
-        const nuevoRegistro = new Registro({ 
-            userId, 
-            deviceID, 
-            ubicacion, // Asegúrate de que este objeto tenga lat y lng
-            fecha: new Date(), // Establecer la fecha y hora actual
-            tipo: 'entrada' 
+        const nuevoRegistro = new Registro({
+            userId,
+            deviceID,
+            ubicacion,
+            fecha: obtenerFechaLocal(), // Usar la fecha ajustada
+            tipo: 'entrada'
         });
         await nuevoRegistro.save();
         res.status(201).json({ msg: 'Entrada registrada exitosamente' });
@@ -27,12 +35,12 @@ router.post('/salida', async (req, res) => {
     const { userId, deviceID, ubicacion } = req.body;
 
     try {
-        const nuevoRegistro = new Registro({ 
-            userId, 
-            deviceID, 
-            ubicacion, // Asegúrate de que este objeto tenga lat y lng
-            fecha: new Date(), // Establecer la fecha y hora actual
-            tipo: 'salida' 
+        const nuevoRegistro = new Registro({
+            userId,
+            deviceID,
+            ubicacion,
+            fecha: obtenerFechaLocal(), // Usar la fecha ajustada
+            tipo: 'salida'
         });
         await nuevoRegistro.save();
         res.status(201).json({ msg: 'Salida registrada exitosamente' });
