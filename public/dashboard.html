@@ -17,41 +17,114 @@
             <button id="registerEntry" class="btn btn-primary">Registro de entrada</button>
             <button id="registerExit" class="btn btn-secondary">Registro de salida</button>
         </div>
+        <div id="locationInfo" class="mt-3"></div> <!-- Div para mostrar la información de ubicación -->
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem('token');
             if (!token) {
-                // Redirige a la página de inicio de sesión si no hay token
                 window.location.href = 'login.html';
             } else {
-                // Aquí puedes decodificar el token para obtener información del usuario, si es necesario
                 const welcomeMessage = document.getElementById('welcomeMessage');
                 welcomeMessage.innerHTML = '¡Hola, usuario!';
-
-                // Aquí puedes agregar más lógica para mostrar información del usuario
             }
         });
 
         // Lógica para cerrar sesión
         document.getElementById('logoutButton').addEventListener('click', () => {
-            localStorage.removeItem('token'); // Elimina el token
-            window.location.href = 'login.html'; // Redirige a la página de inicio de sesión
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
         });
 
+        // Función para obtener la ubicación actual
+        function getLocation() {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            resolve({
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                            });
+                        },
+                        (error) => {
+                            reject(error);
+                        }
+                    );
+                } else {
+                    reject(new Error('Geolocalización no es soportada por este navegador.'));
+                }
+            });
+        }
+
         // Lógica para registrar entrada
-        document.getElementById('registerEntry').addEventListener('click', () => {
-            // Aquí puedes agregar la lógica para registrar la entrada
-            alert('Registro de entrada realizado.');
+        document.getElementById('registerEntry').addEventListener('click', async () => {
+            try {
+                const location = await getLocation();
+                const now = new Date();
+                const entryData = {
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    dateTime: now.toISOString(),
+                };
+
+                // Mostrar la información de ubicación en el dashboard
+                document.getElementById('locationInfo').innerHTML = `
+                    <div>Registro de entrada: ${now.toLocaleString()}</div>
+                    <div>Ubicación: ${entryData.latitude}, ${entryData.longitude}</div>
+                `;
+
+                // Envía la ubicación y la fecha/hora a tu servidor
+                await fetch('/api/registro/entrada', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify(entryData),
+                });
+
+                alert('Registro de entrada realizado.');
+            } catch (error) {
+                console.error('Error al obtener la ubicación:', error);
+                alert('No se pudo obtener la ubicación.');
+            }
         });
 
         // Lógica para registrar salida
-        document.getElementById('registerExit').addEventListener('click', () => {
-            // Aquí puedes agregar la lógica para registrar la salida
-            alert('Registro de salida realizado.');
+        document.getElementById('registerExit').addEventListener('click', async () => {
+            try {
+                const location = await getLocation();
+                const now = new Date();
+                const exitData = {
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    dateTime: now.toISOString(),
+                };
+
+                // Mostrar la información de ubicación en el dashboard
+                document.getElementById('locationInfo').innerHTML = `
+                    <div>Registro de salida: ${now.toLocaleString()}</div>
+                    <div>Ubicación: ${exitData.latitude}, ${exitData.longitude}</div>
+                `;
+
+                // Envía la ubicación y la fecha/hora a tu servidor
+                await fetch('/api/registro/salida', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify(exitData),
+                });
+
+                alert('Registro de salida realizado.');
+            } catch (error) {
+                console.error('Error al obtener la ubicación:', error);
+                alert('No se pudo obtener la ubicación.');
+            }
         });
     </script>
 </body>
 </html>
-
