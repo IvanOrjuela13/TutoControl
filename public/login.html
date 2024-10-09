@@ -50,7 +50,8 @@
                 const messageDiv = document.getElementById('message');
                 if (response.ok) {
                     messageDiv.innerHTML = `<div class="alert alert-success">${data.msg}</div>`;
-                    // Puedes redirigir a otra página o hacer algo después de iniciar sesión
+                    localStorage.setItem('token', data.token); // Guarda el token en localStorage
+                    window.location.href = 'dashboard.html'; // Redirige al dashboard
                 } else {
                     messageDiv.innerHTML = `<div class="alert alert-danger">${data.msg}</div>`;
                 }
@@ -63,3 +64,4 @@
     </script>
 </body>
 </html>
+
