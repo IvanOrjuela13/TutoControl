@@ -1,6 +1,6 @@
 const express = require('express');
 const Registro = require('../models/registro');
-const moment = require('moment-timezone'); // Importa moment-timezone
+const moment = require('moment-timezone');
 const router = express.Router();
 
 // Ruta para registrar entrada
@@ -8,8 +8,8 @@ router.post('/entrada', async (req, res) => {
     const { userId, deviceID, ubicacion } = req.body;
 
     try {
-        // Obtén la fecha y hora actual en la zona horaria local
-        const fechaLocal = moment().tz("America/Bogota").toDate(); // Ajusta a la zona horaria que necesites
+        // Ajusta la fecha y hora con la zona horaria y suma 30 minutos
+        const fechaLocal = moment().tz("America/Bogota").add(30, 'minutes').toDate();
 
         const nuevoRegistro = new Registro({
             userId,
@@ -31,8 +31,8 @@ router.post('/salida', async (req, res) => {
     const { userId, deviceID, ubicacion } = req.body;
 
     try {
-        // Obtén la fecha y hora actual en la zona horaria local
-        const fechaLocal = moment().tz("America/Bogota").toDate(); // Ajusta a la zona horaria que necesites
+        // Ajusta la fecha y hora con la zona horaria y suma 30 minutos
+        const fechaLocal = moment().tz("America/Bogota").add(30, 'minutes').toDate();
 
         const nuevoRegistro = new Registro({
             userId,
