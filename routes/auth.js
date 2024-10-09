@@ -52,6 +52,7 @@ router.post('/login', async (req, res) => {
         const payload = { userId: user._id };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
+        // Enviar el token y mensaje al cliente
         res.json({ token, msg: 'Inicio de sesión exitoso' });
     } catch (error) {
         console.error(error.message);
