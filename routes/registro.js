@@ -1,24 +1,21 @@
 const express = require('express');
-const Registro = require('../models/registro'); // Asegúrate de que este modelo existe
+const Registro = require('../models/registro');
+const moment = require('moment-timezone'); // Importa moment-timezone
 const router = express.Router();
-const moment = require('moment-timezone'); // Importar moment-timezone
-
-// Función para obtener la fecha y hora local ajustada con la zona horaria
-function obtenerFechaLocal() {
-    // Reemplaza 'America/Bogota' por la zona horaria que necesites
-    return moment().tz('America/Bogota').toDate(); 
-}
 
 // Ruta para registrar entrada
 router.post('/entrada', async (req, res) => {
     const { userId, deviceID, ubicacion } = req.body;
 
     try {
+        // Obtén la fecha y hora actual en la zona horaria local
+        const fechaLocal = moment().tz("America/Bogota").toDate(); // Ajusta a la zona horaria que necesites
+
         const nuevoRegistro = new Registro({
             userId,
             deviceID,
             ubicacion,
-            fecha: obtenerFechaLocal(), // Usar la fecha ajustada con la zona horaria correcta
+            fecha: fechaLocal, // Usa la fecha local ajustada
             tipo: 'entrada'
         });
         await nuevoRegistro.save();
@@ -34,11 +31,14 @@ router.post('/salida', async (req, res) => {
     const { userId, deviceID, ubicacion } = req.body;
 
     try {
+        // Obtén la fecha y hora actual en la zona horaria local
+        const fechaLocal = moment().tz("America/Bogota").toDate(); // Ajusta a la zona horaria que necesites
+
         const nuevoRegistro = new Registro({
             userId,
             deviceID,
             ubicacion,
-            fecha: obtenerFechaLocal(), // Usar la fecha ajustada con la zona horaria correcta
+            fecha: fechaLocal, // Usa la fecha local ajustada
             tipo: 'salida'
         });
         await nuevoRegistro.save();
