@@ -7,7 +7,7 @@ const registroSchema = new mongoose.Schema({
         lat: { type: Number, required: true },
         lng: { type: Number, required: true }
     },
-    fecha: { type: Date }, // No se establece un valor predeterminado
+    fecha: { type: Date, default: Date.now }, // Se sobrescribe con obtenerFechaLocal()
     tipo: { type: String, required: true } // 'entrada' o 'salida'
 });
 
