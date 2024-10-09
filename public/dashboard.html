@@ -3,23 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Dashboard</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .btn {
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Registro de Entradas y Salidas</h1>
-    <button id="registroEntrada">Registrar Entrada</button>
-    <button id="registroSalida">Registrar Salida</button>
 
-    <div id="mensaje" style="color: red;"></div>
+<div class="container">
+    <h1 class="text-center">Registro de Entrada y Salida</h1>
+    <div class="text-center">
+        <button id="registroEntrada" class="btn btn-success">Registro de Entrada</button>
+        <button id="registroSalida" class="btn btn-danger">Registro de Salida</button>
+    </div>
+    <div id="mensaje" class="text-center mt-3"></div>
+</div>
 
-    <script>
-        document.getElementById('registroEntrada').onclick = async () => {
-            const tipo = 'entrada';
-            const userId = 'ID_DEL_USUARIO'; // Asegúrate de reemplazar esto con el ID del usuario real
-            const ubicacion = { lat: 0, lng: 0 }; // Aquí deberías obtener la ubicación en tiempo real
+<script>
+    // Función para registrar entrada
+    document.getElementById('registroEntrada').onclick = async () => {
+        const userId = 'ID_DEL_USUARIO'; // Cambia esto por el ID del usuario real
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const ubicacion = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            };
 
             try {
-                const response = await fetch(`/api/registro/${tipo}`, {
+                const response = await fetch(`/api/registro/entrada`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -29,28 +49,36 @@
 
                 if (!response.ok) {
                     const data = await response.json();
-                    console.error('Error:', data.msg); // Mensaje de error en la consola
-                    document.getElementById('mensaje').textContent = `Error: ${data.msg}`; // Mostrar en la interfaz
-                    return; // Terminar la función si hay un error
+                    console.error('Error:', data.msg);
+                    alert(`Error: ${data.msg}`);
+                    return;
                 }
 
                 const data = await response.json();
-                console.log(data.msg); // Mensaje de éxito en la consola
-                document.getElementById('mensaje').textContent = data.msg; // Mostrar en la interfaz
+                console.log(data.msg);
+                alert(data.msg);
 
             } catch (error) {
-                console.error('Error al registrar la entrada:', error); // Error de la solicitud
-                document.getElementById('mensaje').textContent = `Error al registrar la entrada: ${error.message}`; // Mostrar en la interfaz
+                console.error('Error al registrar la entrada:', error);
+                alert(`Error al registrar la entrada: ${error.message}`);
             }
-        };
+        }, (error) => {
+            console.error('Error de geolocalización:', error);
+            alert('No se pudo obtener la ubicación.');
+        });
+    };
 
-        document.getElementById('registroSalida').onclick = async () => {
-            const tipo = 'salida';
-            const userId = 'ID_DEL_USUARIO'; // Asegúrate de reemplazar esto con el ID del usuario real
-            const ubicacion = { lat: 0, lng: 0 }; // Aquí deberías obtener la ubicación en tiempo real
+    // Función para registrar salida
+    document.getElementById('registroSalida').onclick = async () => {
+        const userId = 'ID_DEL_USUARIO'; // Cambia esto por el ID del usuario real
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const ubicacion = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            };
 
             try {
-                const response = await fetch(`/api/registro/${tipo}`, {
+                const response = await fetch(`/api/registro/salida`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -60,20 +88,28 @@
 
                 if (!response.ok) {
                     const data = await response.json();
-                    console.error('Error:', data.msg); // Mensaje de error en la consola
-                    document.getElementById('mensaje').textContent = `Error: ${data.msg}`; // Mostrar en la interfaz
-                    return; // Terminar la función si hay un error
+                    console.error('Error:', data.msg);
+                    alert(`Error: ${data.msg}`);
+                    return;
                 }
 
                 const data = await response.json();
-                console.log(data.msg); // Mensaje de éxito en la consola
-                document.getElementById('mensaje').textContent = data.msg; // Mostrar en la interfaz
+                console.log(data.msg);
+                alert(data.msg);
 
             } catch (error) {
-                console.error('Error al registrar la salida:', error); // Error de la solicitud
-                document.getElementById('mensaje').textContent = `Error al registrar la salida: ${error.message}`; // Mostrar en la interfaz
+                console.error('Error al registrar la salida:', error);
+                alert(`Error al registrar la salida: ${error.message}`);
             }
-        };
-    </script>
+        }, (error) => {
+            console.error('Error de geolocalización:', error);
+            alert('No se pudo obtener la ubicación.');
+        });
+    };
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
