@@ -50,6 +50,7 @@
             document.getElementById('location').innerHTML = `Latitud: ${locationData.lat}, Longitud: ${locationData.lng}`;
             document.getElementById('timestamp').innerHTML = `Fecha y Hora: ${new Date().toLocaleString()}`;
 
+            // Guardar la ubicación y timestamp en la base de datos
             return locationData;
         }
 
@@ -77,7 +78,7 @@
             if (locationData) {
                 const userId = 'ID_DEL_USUARIO'; // Cambia esto por el ID del usuario logueado
                 const deviceID = localStorage.getItem('deviceID');
-
+                
                 const response = await fetch('/api/registro/entrada', {
                     method: 'POST',
                     headers: {
