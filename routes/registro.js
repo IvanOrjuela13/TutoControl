@@ -8,8 +8,8 @@ router.post('/entrada', async (req, res) => {
     const { userId, deviceID, ubicacion } = req.body;
 
     try {
-        // Ajusta la fecha y hora con la zona horaria y suma 30 minutos
-        const fechaLocal = moment().tz("America/Bogota").add(30, 'minutes').toDate();
+        // Obtén la fecha y hora con la zona horaria correcta
+        const fechaLocal = moment().tz("America/Bogota").toDate();
 
         const nuevoRegistro = new Registro({
             userId,
@@ -31,8 +31,8 @@ router.post('/salida', async (req, res) => {
     const { userId, deviceID, ubicacion } = req.body;
 
     try {
-        // Ajusta la fecha y hora con la zona horaria y suma 30 minutos
-        const fechaLocal = moment().tz("America/Bogota").add(30, 'minutes').toDate();
+        // Obtén la fecha y hora con la zona horaria correcta
+        const fechaLocal = moment().tz("America/Bogota").toDate();
 
         const nuevoRegistro = new Registro({
             userId,
