@@ -121,11 +121,11 @@
 
         // Función para cerrar sesión
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            // Redirigir al inicio de sesión
-            window.location.href = '/login.html';
-
             // Guardar un mensaje en el almacenamiento local para mostrar después del redireccionamiento
             localStorage.setItem('logoutMessage', 'Sesión cerrada exitosamente.');
+
+            // Redirigir al inicio de sesión
+            window.location.href = '/login.html';
         });
 
         // Mostrar mensaje de "Sesión cerrada" si existe al cargar la página
@@ -133,7 +133,7 @@
             const logoutMessage = localStorage.getItem('logoutMessage');
             if (logoutMessage) {
                 document.getElementById('message').innerHTML = `<div class="alert alert-warning">${logoutMessage}</div>`;
-                // No eliminar el mensaje del localStorage para que se mantenga disponible
+                localStorage.removeItem('logoutMessage'); // Limpiar el mensaje para que no aparezca nuevamente
             }
         };
 
