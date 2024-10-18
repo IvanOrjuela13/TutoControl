@@ -121,8 +121,14 @@
 
         // Función para cerrar sesión
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            // Redirigir al inicio de sesión
-            window.location.href = '/login.html';
+            // Mostrar mensaje de éxito
+            const messageElement = document.getElementById('message');
+            messageElement.innerHTML = '<div class="alert alert-success">Sesión cerrada con éxito.</div>';
+            
+            // Esperar 30 segundos antes de redirigir al inicio de sesión
+            setTimeout(() => {
+                window.location.href = '/login.html';
+            }, 30000); // 30000 milisegundos = 30 segundos
         });
 
         // Llamar a la función para obtener la ubicación al cargar la página
