@@ -75,8 +75,9 @@
         // Manejadores de eventos para botones
         document.getElementById('entradaBtn').addEventListener('click', async () => {
             try {
-                const position = await getLocation();
-                const locationData = showPosition(position);
+                const position = await getLocation(); // Esperar a que se obtenga la ubicación
+                const locationData = showPosition(position); // Mostrar la ubicación
+
                 const userId = 'ID_DEL_USUARIO'; // Cambia esto por el ID del usuario logueado
                 const deviceID = localStorage.getItem('deviceID');
 
@@ -91,14 +92,15 @@
                 const data = await response.json();
                 document.getElementById('message').innerHTML = `<div class="alert alert-info">${data.msg}</div>`;
             } catch (error) {
-                showError(error);
+                showError(error); // Manejar el error
             }
         });
 
         document.getElementById('salidaBtn').addEventListener('click', async () => {
             try {
-                const position = await getLocation();
-                const locationData = showPosition(position);
+                const position = await getLocation(); // Esperar a que se obtenga la ubicación
+                const locationData = showPosition(position); // Mostrar la ubicación
+
                 const userId = 'ID_DEL_USUARIO'; // Cambia esto por el ID del usuario logueado
                 const deviceID = localStorage.getItem('deviceID');
 
@@ -113,14 +115,12 @@
                 const data = await response.json();
                 document.getElementById('message').innerHTML = `<div class="alert alert-info">${data.msg}</div>`;
             } catch (error) {
-                showError(error);
+                showError(error); // Manejar el error
             }
         });
 
         // Función para cerrar sesión
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            // Guardar un mensaje en el almacenamiento local para mostrar después del redireccionamiento
-            localStorage.setItem('logoutMessage', 'Sesión cerrada exitosamente.');
             // Redirigir al inicio de sesión
             window.location.href = '/login.html';
         });
